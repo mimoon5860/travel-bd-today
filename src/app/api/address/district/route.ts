@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
   const body: RequestBody = await req.json();
   console.log({ body });
   const res = await prisma.district.create({
-    data: { name: body.name, divisionId: body.divisionId },
+    data: { name: body.name, division_id: body.divisionId },
   });
   console.log({ res });
 
@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
     );
   }
   const districts = await prisma.district.findMany({
-    where: { divisionId: parseInt(divisionId) },
+    where: { division_id: parseInt(divisionId) },
   });
 
   return NextResponse.json({ success: true, data: districts });

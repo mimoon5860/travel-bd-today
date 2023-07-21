@@ -10,11 +10,13 @@ const Page = () => {
     district: "",
     thana: "",
   });
+
   const [addressSelect, setAddressSelect] = useState<IAddressSelect>({
     division: 0,
     district: 0,
     thana: 0,
   });
+
   const [address, setAddress] = useState<IAddress>({
     division: [],
     district: [],
@@ -32,7 +34,7 @@ const Page = () => {
 
   const handleInsertDistrict = async () => {
     const data = await fetcherPost("/api/address/district", {
-      divisionId: addressSelect.division,
+      division_id: addressSelect.division,
       name: addressInput.district,
     });
 
@@ -43,7 +45,7 @@ const Page = () => {
         { id: data.data.id, name: data.data.name },
       ];
       setAddress({ ...address, district });
-      setAddressInput({...addressInput, district:''})
+      setAddressInput({ ...addressInput, district: "" });
     } else {
       alert(data.message);
     }
@@ -51,7 +53,7 @@ const Page = () => {
 
   const handleInsertThana = async () => {
     const data = await fetcherPost("/api/address/thana", {
-      districtId: addressSelect.district,
+      district_id: addressSelect.district,
       name: addressInput.thana,
     });
     if (data.success) {
@@ -61,7 +63,7 @@ const Page = () => {
         { id: data.data.id, name: data.data.name },
       ];
       setAddress({ ...address, thana });
-      setAddressInput({...addressInput, thana:''})
+      setAddressInput({ ...addressInput, thana: "" });
     } else {
       alert(data.message);
     }

@@ -31,8 +31,8 @@ model User{
  address String?
  status Boolean @default(true)
  createdAt DateTime @default(now())
- thana Thana? @relation(fields: [thanaId],references: [id])
- thanaId Int? 
+ thana Thana? @relation(fields: [thana_id],references: [id])
+ thana_id Int? 
  place Place[]
  review Review[]
 }
@@ -42,21 +42,13 @@ model Place{
   title String
   coverImage String
   description String @db.Text
-  thanaId Int 
+  thana Thana @relation(fields: [thana_id],references: [id])
+  thana_id Int 
   status Boolean @default(true)
   author User @relation(fields: [authorId],references: [id])
   authorId Int 
   createdAt DateTime @default(now())
   review Review[]
-  placeContent PlaceContent[]
-}
-
-model PlaceContent{
-  id       Int    @id @default(autoincrement())
-  fileName String
-  place Place @relation(fields: [placeId],references: [id])
-  placeId Int 
-  type ContentType
 }
 
 model Review{
@@ -83,21 +75,31 @@ model ReviewContent{
 model Division{
   id       Int     @id @default(autoincrement())
   name String
+  bn_name String?
+  url String?
   districts District[]
 }
+
 model District{
   id       Int    @id @default(autoincrement())
   name String
-  division Division @relation(fields: [divisionId],references: [id])
-  divisionId Int
+  bn_name String?
+  division_id Int
+  lat String?
+  lon String?
+  url String?
+  division Division @relation(fields: [division_id],references: [id])
   thana Thana[]
 }
 
 model Thana{
   id       Int    @id @default(autoincrement())
+  district_id Int
   name String
-  district District  @relation(fields: [districtId],references: [id])
-  districtId Int
+  bn_name String?
+  url String?
+  district District  @relation(fields: [district_id],references: [id])
   user User[]
+  place Place[]
 }
 

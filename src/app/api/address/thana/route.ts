@@ -9,7 +9,7 @@ interface RequestBody {
 export async function POST(req: Request) {
   const body: RequestBody = await req.json();
   const res = await prisma.thana.create({
-    data: { name: body.name, districtId: body.districtId },
+    data: { name: body.name, district_id: body.districtId },
   });
 
   return NextResponse.json({ success: true, data: res });
@@ -28,7 +28,7 @@ export async function GET(req: Request) {
     );
   }
   const thana = await prisma.thana.findMany({
-    where: { districtId: parseInt(districtId) },
+    where: { district_id: parseInt(districtId) },
   });
 
   return NextResponse.json({ success: true, data: thana });
