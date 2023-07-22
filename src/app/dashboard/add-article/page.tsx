@@ -88,6 +88,7 @@ const Page = () => {
             <div className="md:col-span-3 mt-4 md:mt-0">
               <input
                 type="text"
+                value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Enter place name"
                 className="w-full rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"

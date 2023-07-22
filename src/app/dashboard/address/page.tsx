@@ -69,6 +69,8 @@ const Page = () => {
     }
   };
 
+  console.log({ address });
+
   return (
     <div>
       <div>

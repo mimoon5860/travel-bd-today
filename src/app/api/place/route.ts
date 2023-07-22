@@ -12,12 +12,6 @@ interface IBodyData {
   coverImage: string;
 }
 
-interface IPlaceFilter {
-  division_id?: number;
-  district_id?: number;
-  thana_id?: number;
-}
-
 export async function POST(req: NextRequest, res: NextResponse) {
   const formData = await req.formData();
   const body: any = Object.fromEntries(formData);
@@ -51,21 +45,53 @@ export async function POST(req: NextRequest, res: NextResponse) {
   return NextResponse.json({ success: true, data: place });
 }
 
+interface IPlaceFilter {
+  thana: {
+    district_id?: number;
+    district: {
+      division_id?: number;
+    };
+  };
+  thana_id?: number;
+  authorId?: number;
+}
+
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const division_id = url.searchParams.get("division_id");
   const district_id = url.searchParams.get("district_id");
   const thana_id = url.searchParams.get("thana_id");
+  const author_id = url.searchParams.get("author_id");
 
-  const filter: IPlaceFilter = {};
-  if (division_id) filter.division_id = parseInt(division_id);
-  if (district_id) filter.district_id = parseInt(district_id);
+  const filter: IPlaceFilter = { thana: { district: {} } };
+  if (division_id) filter.thana.district.division_id = parseInt(division_id);
+  if (district_id) filter.thana.district_id = parseInt(district_id);
   if (thana_id) filter.thana_id = parseInt(thana_id);
+  if (author_id) filter.authorId = parseInt(author_id);
 
-  const places = await prisma.place.findMany({
-    select: {
-      thana: {},
-    },
-    where: {},
-  });
+  try {
+    const places = await prisma.place.findMany({
+      select: {
+        id: true,
+        title: true,
+        coverImage: true,
+        status: true,
+        createdAt: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      where: filter,
+    });
+    return NextResponse.json({ success: true, data: places });
+  } catch (err: any) {
+    return NextResponse.json(
+      {
+        success: false,
+        data: [],
+        message: err.message,
+      },
+      { status: 500 }
+    );
+  }
 }

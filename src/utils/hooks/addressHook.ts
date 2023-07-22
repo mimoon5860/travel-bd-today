@@ -52,36 +52,3 @@ export const getThana = async (id: number) => {
     return [];
   }
 };
-
-const selectDivision = async (id: number) => {
-  // setAddressSelect({ division: id, district: 0, thana: 0 });
-  addressSelect.division = id;
-  addressSelect.district = 0;
-  addressSelect.thana = 0;
-  const data: IResponse<IDistrict[]> = await fetcherGet(
-    `/api/address/district?divisionId=${id}`
-  );
-  if (data.success) {
-    //   setAddress({ ...address, district: data.data || [], thana: [] });
-    address.district = data.data || [];
-    address.thana = [];
-  }
-};
-
-const selectDistrict = async (id: number) => {
-  // setAddressSelect({ ...addressSelect, district: id, thana: 0 });
-  addressSelect.district = id;
-  addressSelect.thana = 0;
-  const data: IResponse<IThana[]> = await fetcherGet(
-    `/api/address/thana?districtId=${id}`
-  );
-  if (data.success) {
-    //   setAddress({ ...address, thana: data.data || [] });
-    address.thana = data.data || [];
-  }
-};
-
-const selectThana = async (id: number) => {
-  // setAddressSelect({ ...addressSelect, thana: id });
-  addressSelect.thana = id;
-};

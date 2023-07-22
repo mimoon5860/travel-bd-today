@@ -20,7 +20,8 @@ module.exports = {
       primary: "#4A6CF7",
       yellow: "#FBB040",
       gray: "rgb(156 163 175)",
-      "body-color": "#959CB1",
+      success: "rgb(22 163 74)",
+      danger: "rgb(220 38 38)",
     },
     extend: {
       boxShadow: {
