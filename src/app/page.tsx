@@ -15,12 +15,6 @@ export default function Home() {
       <Features />
       <Places />
       <Reviews />
-      {/* <Brands /> */}
-      {/* <AboutSectionOne /> */}
-      {/* <AboutSectionTwo /> */}
-      {/* <Testimonials /> */}
-      {/* <Pricing /> */}
-      {/* <Blog /> */}
       <Contact />
     </>
   );

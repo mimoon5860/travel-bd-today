@@ -154,13 +154,20 @@ const Header = () => {
                     ))}
 
                     <li className="group relative block md:hidden">
-                    <Link href='/signin'  className={`flex py-2 text-base text-dark group-hover:opacity-70 dark:text-white lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
-                          >Signin  </Link>
+                      <Link
+                        href="/signin"
+                        className={`flex py-2 text-base text-dark group-hover:opacity-70 dark:text-white lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
+                      >
+                        Signin{" "}
+                      </Link>
                     </li>
                     <li className="group relative block md:hidden">
-                    <Link href='/signup'  className={`flex py-2 text-base text-dark group-hover:opacity-70 dark:text-white lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
-                          >Signup  </Link>
-                      
+                      <Link
+                        href="/signup"
+                        className={`flex py-2 text-base text-dark group-hover:opacity-70 dark:text-white lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
+                      >
+                        Signup{" "}
+                      </Link>
                     </li>
                   </ul>
                 </nav>

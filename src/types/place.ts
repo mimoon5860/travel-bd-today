@@ -1,3 +1,5 @@
+import { IReview } from "./review";
+
 export interface IPlaceLIst {
   id: number;
   title: string;
@@ -29,6 +31,7 @@ export interface IPlaceDetails {
   description: string;
   author: IAuthor;
   thana: IAddress;
+  review: IReview[];
   status: boolean;
   createdAt: string;
 }

@@ -7,7 +7,7 @@ interface PageProps {
   place: IPlaceLIst;
 }
 
-const PlaceCard = async ({ place }: PageProps) => {
+const PlaceCardForPublic = async ({ place }: PageProps) => {
   return (
     <div className="max-w-sm rounded-lg shadow">
       <Image
@@ -29,18 +29,10 @@ const PlaceCard = async ({ place }: PageProps) => {
             Read more
             <FiArrowRight />
           </Link>
-          <span
-            // onClick={() => updateStatus(place.id, place.status)}
-            className={`px-2 py-1 rounded-lg text-white ${
-              place.status ? "bg-success" : "bg-danger"
-            } opacity-50 hover:opacity-100 duration-200 cursor-pointer`}
-          >
-            {place.status ? "Active" : "Deactive"}
-          </span>
         </div>
       </div>
     </div>
   );
 };
 
-export default PlaceCard;
+export default PlaceCardForPublic;

@@ -41,6 +41,28 @@ export async function GET(_req: NextRequest, { params }: any) {
             },
           },
         },
+        review: {
+          select: {
+            id: true,
+            rating: true,
+            review: true,
+            createdAt: true,
+            user: {
+              select: {
+                id: true,
+                name: true,
+                photo: true,
+              },
+            },
+            reviewContent: {
+              select: {
+                id: true,
+                fileName: true,
+                type: true,
+              },
+            },
+          },
+        },
         status: true,
         createdAt: true,
       },

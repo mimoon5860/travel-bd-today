@@ -25,7 +25,7 @@ model User{
  name String
  photo String?
  role Role @default(User)
- email String
+ email String @unique
  phone String?
  password String
  address String?

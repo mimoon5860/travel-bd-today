@@ -31,15 +31,17 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const fileExtension = extname(file.name);
   const filename = `${uuid()}${fileExtension}`;
   body.thumbnail = filename;
+
   const place = await prisma.place.create({
     data: {
       title,
       thana_id: parseInt(thanaId),
       authorId: parseInt(authorId),
       description,
-      coverImage: filename,
+      coverImage: `places/${filename}`,
     },
   });
+
   await writeFile(`${pathDist}/${filename}`, buffer);
 
   return NextResponse.json({ success: true, data: place });

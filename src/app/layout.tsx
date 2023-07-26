@@ -4,7 +4,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import "../styles/index.css";
 import "swiper/css";
 import { Providers } from "./providers";
-import AuthProviders from "@/components/Providers/AuthProviders";
+import AuthProvider from "@/context/AuthContext";
 
 export default function RootLayout({
   children,
@@ -16,13 +16,11 @@ export default function RootLayout({
       <head />
       <body className="dark:bg-black">
         <Providers>
-          <AuthProviders>
-            <>
-              {children}
-              <Footer />
-              <ScrollToTop />
-            </>
-          </AuthProviders>
+          <AuthProvider>
+            {children}
+            <Footer />
+            <ScrollToTop />
+          </AuthProvider>
         </Providers>
       </body>
     </html>
