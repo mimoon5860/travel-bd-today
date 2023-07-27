@@ -23,7 +23,7 @@ const PlaceCardForPublic = async ({ place }: PageProps) => {
         </h5>
         <div className="flex items-center justify-between">
           <Link
-            href={`/dashboard/article/${place.id}`}
+            href={`/place/${place.id}`}
             className="inline-flex bg-primary items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4"
           >
             Read more
