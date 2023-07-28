@@ -6,52 +6,57 @@ import axios from "axios";
 // import prisma from "@/utils/prisma";
 
 export const options: NextAuthOptions = {
-  //   adapter: PrismaAdapter(prisma),
+  session: {
+    strategy: "jwt",
+  },
   providers: [
-    GitHubProvider({
-      clientId: process.env.GITHUB_ID as string,
-      clientSecret: process.env.GITHUB_SECRET as string,
-    }),
     CredentialsProvider({
       name: "Credentials",
-      credentials: {
-        username: {
-          label: "Email:",
-          type: "email",
-          placeholder: "Enter your email",
-        },
-        password: {
-          label: "Password:",
-          type: "password",
-          placeholder: "Enter your password",
-        },
-      },
-      async authorize(credentials: any) {
-        if (!credentials.email || !credentials.password) {
+      credentials: {},
+      async authorize({
+        email,
+        password,
+      }: {
+        email: string;
+        password: string;
+      }) {
+        if (!email || !password) {
           throw new Error("Please enter an email and password");
         }
 
-        const res = await fetch("http://localhost:3000/api/login");
+        const res = await fetch("http://localhost:3000/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        });
         const user = await res.json();
 
         if (user) {
           return user;
         } else {
-          return null;
+          throw Error("Wrong email or password");
         }
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user, trigger, session }) {
-      if (trigger === "update") {
-        return { ...token, ...session.user };
+    jwt(params: any) {
+      if (params.user?.role) {
+        params.token.role = params.user.role;
+        params.token.id = params.user.id;
       }
-      return { ...token, ...user };
+      return params.token;
     },
-
-    async session({ session, token }) {
-      session.user = token as any;
+    session({ session, token }) {
+      if (session.user) {
+        (session.user as { id: string }).id = token.id as string;
+        (session.user as { role: string }).role = token.role as string;
+      }
       return session;
     },
   },

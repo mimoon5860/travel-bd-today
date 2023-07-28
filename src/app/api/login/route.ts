@@ -1,6 +1,7 @@
 import { signJwtAccessToken } from "@/utils/lib";
 import prisma from "@/utils/prisma";
 import bcrypt from "bcryptjs";
+import { NextResponse } from "next/server";
 
 interface RequestBody {
   email: string;
@@ -24,6 +25,6 @@ export async function POST(request: Request, res: Response) {
       ...userWithoutPass,
       accessToken,
     };
-    return new Response(JSON.stringify(result));
-  } else return new Response(JSON.stringify(null));
+    return NextResponse.json({ success: true, data: userWithoutPass });
+  } else return new Response(JSON.stringify(null), { status: 500 });
 }

@@ -11,6 +11,10 @@ export interface IReview {
   rating: number;
   review: string;
   createdAt: string;
+  place?: {
+    id: number;
+    title: string;
+  };
   user: {
     id: number;
     name: string;

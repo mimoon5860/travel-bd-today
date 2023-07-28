@@ -89,6 +89,9 @@ export async function GET(req: Request) {
       },
     },
     where,
+    orderBy: {
+      rating: "desc",
+    },
   });
 
   return NextResponse.json({ success: true, data: thana });

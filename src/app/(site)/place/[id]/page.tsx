@@ -54,12 +54,8 @@ const Page = async ({ params }: { params: { id: string } }) => {
           className="mt-2"
         ></div>
       </div>
-      <div>
-        {place.review.length ? (
-          <PlaceReview reviews={place.review} />
-        ) : (
-          <h3>No review</h3>
-        )}
+      <div className="my-5">
+        <PlaceReview reviews={place.review} placeId={params.id} />
       </div>
     </div>
   );

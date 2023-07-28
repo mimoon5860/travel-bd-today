@@ -1,5 +1,3 @@
-"use client";
-
 const page = () => {
   const rating = 2;
   return <section>Profile</section>;
