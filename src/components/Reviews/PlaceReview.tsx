@@ -17,7 +17,6 @@ interface IProps {
 export default function PlaceReview({ reviews, placeId }: IProps) {
   const [modalState, setModalState] = useState(false);
   const { status, data } = useSession();
-  console.log({ data });
   const show = () => {
     setModalState(true);
   };

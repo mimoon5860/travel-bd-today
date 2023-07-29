@@ -1,6 +1,6 @@
 import {
-  IAddress,
-  IAddressSelect,
+  // IAddress,
+  // IAddressSelect,
   IDistrict,
   IDivision,
   IThana,
@@ -8,17 +8,17 @@ import {
 import { IResponse } from "@/types/response";
 import { fetcherGet } from "../fetcher";
 
-const address: IAddress = {
-  division: [],
-  district: [],
-  thana: [],
-};
+// const address: IAddress = {
+//   division: [],
+//   district: [],
+//   thana: [],
+// };
 
-const addressSelect: IAddressSelect = {
-  division: 0,
-  district: 0,
-  thana: 0,
-};
+// const addressSelect: IAddressSelect = {
+//   division: 0,
+//   district: 0,
+//   thana: 0,
+// };
 
 export const getDivision = async () => {
   const data: IResponse<IDivision[]> = await fetcherGet(

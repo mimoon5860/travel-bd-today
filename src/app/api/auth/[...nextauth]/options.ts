@@ -61,7 +61,6 @@ const options: NextAuthOptions = {
         (session.user as { phone: string }).phone = token.phone as string;
         (session.user as { photo: string }).photo = token.photo as string;
       }
-      console.log({ session, token });
       return session;
     },
   },

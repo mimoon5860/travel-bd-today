@@ -24,7 +24,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
             <Image
               src={
                 place.author.photo
-                  ? `/uploads/user/${place.author.photo}`
+                  ? `/uploads/${place.author.photo}`
                   : "/images/testimonials/demo-author.png"
               }
               className="rounded-full"
@@ -42,7 +42,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
       <div className="mt-2">
         <div className="mb-8">
           <Image
-            src={`/uploads/places/${place.coverImage}`}
+            src={`/uploads/${place.coverImage}`}
             alt="Article cover"
             className="mx-auto"
             width={700}

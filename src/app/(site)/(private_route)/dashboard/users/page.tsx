@@ -1,5 +1,7 @@
+import NotFound from "@/components/NotFound/NotFound";
+
 const page = () => {
-  return <div>Manage users</div>;
+  return <NotFound />;
 };
 
 export default page;
