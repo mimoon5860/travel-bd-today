@@ -7,6 +7,7 @@ import Image from "next/image";
 import dayjs from "dayjs";
 import { useState } from "react";
 import ReviewModal from "./ReviewModal";
+import { useSession } from "next-auth/react";
 
 interface IProps {
   reviews: IReview[];
@@ -15,7 +16,8 @@ interface IProps {
 
 export default function PlaceReview({ reviews, placeId }: IProps) {
   const [modalState, setModalState] = useState(false);
-
+  const { status, data } = useSession();
+  console.log({ data });
   const show = () => {
     setModalState(true);
   };
@@ -27,12 +29,14 @@ export default function PlaceReview({ reviews, placeId }: IProps) {
     <div>
       <div className="my-3 flex justify-between">
         <h3 className="font-bold text-xl">Reviews:</h3>
-        <button
-          className="cursor-pointer text-white rounded-md px-4 py-3 text-center text-sm font-semibold bg-primary uppercase transition duration-200 ease-in-out "
-          onClick={show}
-        >
-          Add Review
-        </button>
+        {status === "authenticated" && (
+          <button
+            className="cursor-pointer text-white rounded-md px-4 py-3 text-center text-sm font-semibold bg-primary uppercase transition duration-200 ease-in-out "
+            onClick={show}
+          >
+            Add Review
+          </button>
+        )}
       </div>
       {reviews.length ? (
         <Swiper
@@ -73,7 +77,7 @@ export default function PlaceReview({ reviews, placeId }: IProps) {
                       width={50}
                       src={
                         review.user.photo
-                          ? `/uploads/user/${review.user.photo}`
+                          ? `/uploads/${review.user.photo}`
                           : "/images/testimonials/demo-author.png"
                       }
                       alt=""
@@ -145,7 +149,12 @@ export default function PlaceReview({ reviews, placeId }: IProps) {
       ) : (
         <h3 className="text-center text-xl">No review found...</h3>
       )}
-      <ReviewModal hide={hide} modalState={modalState} placeId={placeId} />
+      <ReviewModal
+        hide={hide}
+        modalState={modalState}
+        placeId={placeId}
+        userId={data?.user?.id}
+      />
     </div>
   );
 }

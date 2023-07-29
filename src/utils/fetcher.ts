@@ -21,7 +21,7 @@ export const fetcherPost = async (url: string, body: any) => {
 
     return data.data;
   } catch (err: any) {
-    // console.log({err})
+    console.log({ err });
     return {
       success: false,
       message: "Something went wrong",

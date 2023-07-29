@@ -59,7 +59,7 @@ const Reviews = async () => {
                         width={50}
                         src={
                           review.user.photo
-                            ? `/uploads/user/${review.user.photo}`
+                            ? `/uploads/${review.user.photo}`
                             : "/images/testimonials/demo-author.png"
                         }
                         alt=""

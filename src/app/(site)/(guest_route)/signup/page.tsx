@@ -1,22 +1,57 @@
+"use client";
 import Header from "@/components/Header";
+import { createAccount } from "@/utils/actions/auth";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+interface IInput {
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
+  photo?: File;
+}
+const SignupPage = () => {
+  const [loading, setLoading] = useState(false);
+  const [inputs, setInputs] = useState<IInput>();
+  const navigate = useRouter();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const formData = new FormData();
+    Object.keys(inputs).forEach((item) => {
+      if (inputs[item]) {
+        formData.append(item, inputs[item]);
+      }
+    });
 
-const SigninPage = async () => {
+    const res = await createAccount(formData);
+    if (res.success) {
+      alert(res.message);
+      setLoading(false);
+      navigate.push("/signin");
+    } else {
+      alert(res.message);
+      setLoading(false);
+    }
+    setLoading(false);
+  };
+
   return (
     <>
       <Header />
-      <section className="relative z-10 overflow-hidden pt-36 pb-16 md:pb-20 lg:pt-[180px] lg:pb-28">
+      <section className="relative z-10 overflow-hidden pt-20 pb-10 md:pb-10 lg:pt-[180px] lg:pb-20">
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
               <div className="mx-auto max-w-[500px] rounded-md bg-primary bg-opacity-5 py-10 px-6 dark:bg-dark sm:p-[60px]">
                 <h3 className="mb-3 text-center text-2xl font-bold text-black dark:text-white sm:text-3xl">
-                  Sign in to your account
+                  Create your account
                 </h3>
                 <p className="mb-11 text-center text-base font-medium text-body-color">
-                  Login to add new places or add reviews.
+                  It’s totally free and super easy
                 </p>
-                <button className="mb-6 flex w-full items-center justify-center rounded-md bg-white p-3 text-base font-medium text-body-color shadow-one hover:text-primary dark:bg-[#242B51] dark:text-body-color dark:shadow-signUp dark:hover:text-white">
+                {/* <button className="mb-6 flex w-full items-center justify-center rounded-md bg-white p-3 text-base font-medium text-body-color shadow-one hover:text-primary dark:bg-[#242B51] dark:text-body-color dark:shadow-signUp dark:hover:text-white">
                   <span className="mr-3">
                     <svg
                       width="20"
@@ -50,24 +85,48 @@ const SigninPage = async () => {
                       </defs>
                     </svg>
                   </span>
-                  Sign in with Google
+                  Sign up with Google
                 </button>
                 <div className="mb-8 flex items-center justify-center">
-                  <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color sm:block"></span>
+                  <span className="hidden h-[1px] w-full max-w-[60px] bg-body-color sm:block"></span>
                   <p className="w-full px-5 text-center text-base font-medium text-body-color">
-                    Or, sign in with your email
+                    Or, register with your email
                   </p>
-                  <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color sm:block"></span>
-                </div>
-                <form>
+                  <span className="hidden h-[1px] w-full max-w-[60px] bg-body-color sm:block"></span>
+                </div> */}
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-8">
+                    <label
+                      htmlFor="name"
+                      className="mb-3 block text-sm font-medium text-dark dark:text-white"
+                    >
+                      {" "}
+                      Full Name{" "}
+                    </label>
+                    <input
+                      onChange={(e) =>
+                        setInputs({ ...inputs, name: e.target.value })
+                      }
+                      required
+                      type="text"
+                      name="name"
+                      placeholder="Enter your full name"
+                      className="w-full rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
+                    />
+                  </div>
                   <div className="mb-8">
                     <label
                       htmlFor="email"
                       className="mb-3 block text-sm font-medium text-dark dark:text-white"
                     >
-                      Your Email
+                      {" "}
+                      Your Email{" "}
                     </label>
                     <input
+                      onChange={(e) =>
+                        setInputs({ ...inputs, email: e.target.value })
+                      }
+                      required
                       type="email"
                       name="email"
                       placeholder="Enter your Email"
@@ -76,78 +135,80 @@ const SigninPage = async () => {
                   </div>
                   <div className="mb-8">
                     <label
+                      htmlFor="email"
+                      className="mb-3 block text-sm font-medium text-dark dark:text-white"
+                    >
+                      {" "}
+                      Your Phone{" "}
+                    </label>
+                    <input
+                      onChange={(e) =>
+                        setInputs({ ...inputs, phone: e.target.value })
+                      }
+                      required
+                      type="text"
+                      name="phone"
+                      placeholder="Enter your Phone"
+                      className="w-full rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
+                    />
+                  </div>
+                  <div className="mb-8">
+                    <label
                       htmlFor="password"
                       className="mb-3 block text-sm font-medium text-dark dark:text-white"
                     >
-                      Your Password
+                      {" "}
+                      Your Password{" "}
                     </label>
                     <input
+                      onChange={(e) =>
+                        setInputs({ ...inputs, password: e.target.value })
+                      }
+                      required
                       type="password"
                       name="password"
                       placeholder="Enter your Password"
                       className="w-full rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
                     />
                   </div>
-                  <div className="mb-8 flex flex-col justify-between sm:flex-row sm:items-center">
-                    <div className="mb-4 sm:mb-0">
-                      <label
-                        htmlFor="checkboxLabel"
-                        className="flex cursor-pointer select-none items-center text-sm font-medium text-body-color"
-                      >
-                        <div className="relative">
-                          <input
-                            type="checkbox"
-                            id="checkboxLabel"
-                            className="sr-only"
-                          />
-                          <div className="box mr-4 flex h-5 w-5 items-center justify-center rounded border border-body-color border-opacity-20 dark:border-white dark:border-opacity-10">
-                            <span className="opacity-0">
-                              <svg
-                                width="11"
-                                height="8"
-                                viewBox="0 0 11 8"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M10.0915 0.951972L10.0867 0.946075L10.0813 0.940568C9.90076 0.753564 9.61034 0.753146 9.42927 0.939309L4.16201 6.22962L1.58507 3.63469C1.40401 3.44841 1.11351 3.44879 0.932892 3.63584C0.755703 3.81933 0.755703 4.10875 0.932892 4.29224L0.932878 4.29225L0.934851 4.29424L3.58046 6.95832C3.73676 7.11955 3.94983 7.2 4.1473 7.2C4.36196 7.2 4.55963 7.11773 4.71406 6.9584L10.0468 1.60234C10.2436 1.4199 10.2421 1.1339 10.0915 0.951972ZM4.2327 6.30081L4.2317 6.2998C4.23206 6.30015 4.23237 6.30049 4.23269 6.30082L4.2327 6.30081Z"
-                                  fill="#3056D3"
-                                  stroke="#3056D3"
-                                  strokeWidth="0.4"
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                        Keep me signed in
-                      </label>
-                    </div>
-                    <div>
-                      <a
-                        href="#0"
-                        className="text-sm font-medium text-primary hover:underline"
-                      >
-                        Forgot Password?
-                      </a>
-                    </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="photo"
+                      className="mb-3 block text-sm font-medium text-dark dark:text-white"
+                    >
+                      Upload Photo (optional)
+                    </label>
+                    <input
+                      onChange={(e) =>
+                        setInputs({ ...inputs, photo: e.target.files[0] })
+                      }
+                      type="file"
+                      id="photo"
+                      name="photo"
+                      accept="image/*"
+                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                    />
                   </div>
                   <div className="mb-6">
-                    <button className="flex w-full items-center justify-center rounded-md bg-primary py-4 px-9 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp">
-                      Sign in
-                    </button>
+                    <input
+                      disabled={loading}
+                      className="w-full items-center justify-center rounded-md bg-primary py-4 px-9 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp cursor-pointer"
+                      type="submit"
+                      value={loading ? "Please wait..." : "Sign up"}
+                    />
                   </div>
                 </form>
                 <p className="text-center text-base font-medium text-body-color">
-                  Don’t you have an account?
-                  <Link href="/signup" className="text-primary hover:underline">
-                    Sign up
+                  Already have account?
+                  <Link href="/signin" className="text-primary hover:underline">
+                    Sign in
                   </Link>
                 </p>
               </div>
             </div>
           </div>
         </div>
-        <div className="absolute top-0 left-0 z-[-1]">
+        <div className="absolute left-0 top-0 z-[-1]">
           <svg
             width="1440"
             height="969"
@@ -209,4 +270,4 @@ const SigninPage = async () => {
   );
 };
 
-export default SigninPage;
+export default SignupPage;

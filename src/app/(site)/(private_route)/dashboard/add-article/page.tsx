@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { IAddress, IAddressSelect } from "@/types/address";
 import { getDistrict, getDivision, getThana } from "@/utils/hooks/addressHook";
+import { useSession } from "next-auth/react";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const Page = () => {
@@ -20,6 +21,7 @@ const Page = () => {
     district: [],
     thana: [],
   });
+  const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -54,7 +56,7 @@ const Page = () => {
     formData.append("title", title);
     formData.append("coverImage", thumbnail);
     formData.append("thanaId", addressSelect.thana.toString());
-    formData.append("authorId", "1");
+    formData.append("authorId", session.user.id);
     formData.append("description", writtedBlog);
 
     const data = await fetcherPost("/api/place", formData);

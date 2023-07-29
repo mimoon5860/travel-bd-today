@@ -6,6 +6,8 @@ import "rodal/lib/rodal.css";
 import "swiper/css";
 import { Providers } from "./providers";
 import AuthProvider from "@/context/AuthContext";
+
+// import LoadingProvider from "@/context/LoadingContext";
 // import ProgressBar from "@badrap/bar-of-progress";
 // import Router from "next/router";
 // const progress = new ProgressBar({
@@ -31,8 +33,6 @@ export default function RootLayout({
         <Providers>
           <AuthProvider>
             {children}
-
-            <Footer />
             <ScrollToTop />
           </AuthProvider>
         </Providers>

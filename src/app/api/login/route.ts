@@ -1,4 +1,3 @@
-import { signJwtAccessToken } from "@/utils/lib";
 import prisma from "@/utils/prisma";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
@@ -20,11 +19,7 @@ export async function POST(request: Request, res: Response) {
 
   if (user && (await bcrypt.compare(body.password, user.password))) {
     const { password, ...userWithoutPass } = user;
-    const accessToken = signJwtAccessToken(userWithoutPass);
-    const result = {
-      ...userWithoutPass,
-      accessToken,
-    };
+
     return NextResponse.json({ success: true, data: userWithoutPass });
   } else return new Response(JSON.stringify(null), { status: 500 });
 }

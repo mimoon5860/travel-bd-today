@@ -14,7 +14,7 @@ const PlaceCard = async ({ place }: PageProps) => {
         className="rounded-t-lg"
         height={500}
         width={500}
-        src={`/uploads/places/${place.coverImage}`}
+        src={`/uploads/${place.coverImage}`}
         alt={place.title}
       />
       <div className="p-1 flex flex-col justify-between ">

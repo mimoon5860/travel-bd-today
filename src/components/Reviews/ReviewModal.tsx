@@ -8,6 +8,7 @@ interface IProps {
   modalState: boolean;
   hide: () => void;
   placeId: string;
+  userId: string;
 }
 
 const tooltipArray = [
@@ -42,11 +43,11 @@ interface IInput {
   review: string;
 }
 
-const ReviewModal = ({ modalState, hide, placeId }: IProps) => {
+const ReviewModal = ({ modalState, hide, placeId, userId }: IProps) => {
   const [loading, setLoading] = useState(false);
   const [inputs, setInputs] = useState<IInput>({
     rating: "5",
-    userId: "1",
+    userId: userId,
     review: "",
     placeId,
   });

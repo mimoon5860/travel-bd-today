@@ -5,7 +5,7 @@ import axios from "axios";
 // import { PrismaAdapter } from "@next-auth/prisma-adapter";
 // import prisma from "@/utils/prisma";
 
-export const options: NextAuthOptions = {
+const options: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
@@ -37,7 +37,7 @@ export const options: NextAuthOptions = {
         const user = await res.json();
 
         if (user) {
-          return user;
+          return user.data;
         } else {
           throw Error("Wrong email or password");
         }
@@ -49,6 +49,8 @@ export const options: NextAuthOptions = {
       if (params.user?.role) {
         params.token.role = params.user.role;
         params.token.id = params.user.id;
+        params.token.phone = params.user.phone;
+        params.token.photo = params.user.photo;
       }
       return params.token;
     },
@@ -56,8 +58,12 @@ export const options: NextAuthOptions = {
       if (session.user) {
         (session.user as { id: string }).id = token.id as string;
         (session.user as { role: string }).role = token.role as string;
+        (session.user as { phone: string }).phone = token.phone as string;
+        (session.user as { photo: string }).photo = token.photo as string;
       }
+      console.log({ session, token });
       return session;
     },
   },
 };
+export default options;
