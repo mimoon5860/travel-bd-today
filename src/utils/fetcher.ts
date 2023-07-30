@@ -24,7 +24,21 @@ export const fetcherPost = async (url: string, body: any) => {
     console.log({ err });
     return {
       success: false,
-      message: "Something went wrong",
+      message: err.response?.data?.message,
+    };
+  }
+};
+export const fetcherPatch = async (url: string, body: any) => {
+  try {
+    const data = await axios.patch(url, body);
+    console.log({ data });
+
+    return data.data;
+  } catch (err: any) {
+    console.log({ err });
+    return {
+      success: false,
+      message: err.response?.data?.message,
     };
   }
 };

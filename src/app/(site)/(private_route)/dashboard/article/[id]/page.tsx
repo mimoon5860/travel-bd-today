@@ -2,6 +2,8 @@ import { IPlaceDetails } from "@/types/place";
 import { getSinglePlace } from "@/utils/actions/place";
 import Image from "next/image";
 import dayjs from "dayjs";
+import PlaceReview from "@/components/Reviews/PlaceReview";
+import UpdateArticle from "./UpdateArticle";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const place: IPlaceDetails = await getSinglePlace(params.id);
@@ -17,7 +19,10 @@ const Page = async ({ params }: { params: { id: string } }) => {
   return (
     <div className="container">
       <div>
-        <h2 className="text-2xl">{place.title}</h2>
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl">{place.title}</h2>
+          <UpdateArticle status={place.status} id={place.id} />
+        </div>
         <div className="flex items-center justify-between my-2">
           <div className="flex items-center gap-1">
             <Image
@@ -52,6 +57,9 @@ const Page = async ({ params }: { params: { id: string } }) => {
           dangerouslySetInnerHTML={{ __html: place.description }}
           className="mt-2"
         ></div>
+        <div className="my-5">
+          <PlaceReview reviews={place.review} placeId={params.id} />
+        </div>
       </div>
     </div>
   );

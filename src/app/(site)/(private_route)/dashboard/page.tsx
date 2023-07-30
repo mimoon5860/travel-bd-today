@@ -16,8 +16,8 @@ const Page = () => {
           }
           alt="Profile Photo"
           className="rounded-full"
-          width={128}
-          height={128}
+          width={150}
+          height={150}
         />
         <div
           className="absolute inset-0 rounded-full shadow-inner"

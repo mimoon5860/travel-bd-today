@@ -90,3 +90,41 @@ export async function GET(_req: NextRequest, { params }: any) {
     );
   }
 }
+
+interface RequestBody {
+  status: "active" | "inactive";
+}
+interface IParams {
+  params: { id: string };
+}
+
+export async function PATCH(req: NextRequest, { params }: IParams) {
+  const body: RequestBody = await req.json();
+  if (!params.id || !parseInt(params.id)) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: "You must provide valid id in params",
+      },
+      { status: 400 }
+    );
+  }
+  let status = false;
+  if (body.status === "active") {
+    status = true;
+  }
+
+  const res = await prisma.place.update({
+    data: { status },
+    where: { id: parseInt(params.id) },
+  });
+
+  if (res) {
+    return NextResponse.json({ success: true, message: "Place updated!" });
+  } else {
+    return NextResponse.json(
+      { success: false, message: "Place not updated!" },
+      { status: 400 }
+    );
+  }
+}

@@ -1,5 +1,5 @@
 import { IResponse } from "@/types/response";
-import { fetcherGet } from "../fetcher";
+import { fetcherGet, fetcherPatch } from "../fetcher";
 import { IPlaceDetails, IPlaceLIst } from "@/types/place";
 import { baseUrl } from "../constants";
 
@@ -17,9 +17,20 @@ export const getPlaces: (params?: IParams) => Promise<IPlaceLIst[]> = async (
   }
 
   if (params?.author_id) {
-    url += `author_id=${params.author_id}`;
+    url += `author_id=${params.author_id}&`;
   }
-  console.log({ url });
+
+  if (params?.status) {
+    url += `status=${params.status}&`;
+  }
+
+  if (params?.limit) {
+    url += `limit=${params.limit}&`;
+  }
+
+  if (params?.skip) {
+    url += `skip=${params.skip}&`;
+  }
 
   const data: IResponse<IPlaceLIst[]> = await fetcherGet(url);
   if (data.success) {
@@ -38,4 +49,11 @@ export const getSinglePlace: (id: string) => Promise<any> = async (id) => {
   } else {
     return null;
   }
+};
+
+export const updateSinglePlace: (
+  id: number,
+  body: any
+) => Promise<any> = async (id, body) => {
+  return await fetcherPatch(`${baseUrl}/place/${id}`, body);
 };

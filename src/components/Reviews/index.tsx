@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import Link from "next/link";
 
 const Reviews = async () => {
-  const reviews = await getReviews();
+  const reviews = await getReviews({ status: "active" });
 
   return (
     <section id="places" className="overflow-hidden py-16 md:py-20 lg:py-28">

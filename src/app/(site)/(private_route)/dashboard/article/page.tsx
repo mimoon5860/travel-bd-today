@@ -1,40 +1,39 @@
+"use client";
+import NotFound from "@/components/NotFound/NotFound";
 import PlaceCard from "@/components/Places/PlaceCard";
 import { IPlaceLIst } from "@/types/place";
 import { getPlaces } from "@/utils/actions/place";
-// import { useEffect, useState } from "react";
-import { getServerSession } from "next-auth";
-import authOptions from "../../../../api/auth/[...nextauth]/options";
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+interface IFilter {
+  [key: string]: string | undefined;
+}
+const Page = () => {
+  const [places, setPlaces] = useState<IPlaceLIst[]>([]);
+  const { data } = useSession();
 
-const Page = async () => {
-  const session = await getServerSession(authOptions);
-  // const updateStatus = async (id: number, status: boolean) => {
-  //   const select = window.confirm(
-  //     `You want to ${status ? "Deactive" : "Active"} this article?`
-  //   );
-
-  //   if (select) {
-  //     setPlaces(
-  //       places.map((item) => {
-  //         if (item.id === id) {
-  //           item.status = !status;
-  //         }
-  //         return item;
-  //       })
-  //     );
-  //   }
-  // };
-
-  const places: IPlaceLIst[] = await getPlaces();
-  console.log({ places });
+  useEffect(() => {
+    const filter: IFilter = {};
+    (async () => {
+      if (data.user.role === "User") {
+        filter.author_id = data.user.id;
+      }
+      const division = await getPlaces(filter);
+      setPlaces(division);
+    })();
+  }, [data.user]);
 
   return (
     <div className="container">
-      <div className="grid md:grid-cols-5 grid-cols-2 gap-2">
-        {places.map((place: IPlaceLIst) => (
-          <PlaceCard key={place.id} place={place} />
-        ))}
-      </div>
+      {places.length ? (
+        <div className="grid md:grid-cols-5 grid-cols-2 gap-2">
+          {places.map((place) => {
+            return <PlaceCard key={place.id} place={place} />;
+          })}
+        </div>
+      ) : (
+        <NotFound />
+      )}
     </div>
   );
 };

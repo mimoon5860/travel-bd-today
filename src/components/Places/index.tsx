@@ -1,11 +1,10 @@
-import { fetcherGet } from "@/utils/fetcher";
 import SectionTitle from "../Common/SectionTitle";
 import { getPlaces } from "@/utils/actions/place";
 import { IPlaceLIst } from "@/types/place";
 import PlaceCardForPublic from "./PlaceCardForPublic";
 
 const Places = async () => {
-  const data = await getPlaces();
+  const data = await getPlaces({ status: "active", limit: "8" });
   return (
     <section id="places" className="overflow-hidden py-16 md:py-20 lg:py-28">
       <div className="container">

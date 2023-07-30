@@ -35,7 +35,7 @@ const PlaceCard = async ({ place }: PageProps) => {
               place.status ? "bg-success" : "bg-danger"
             } opacity-50 hover:opacity-100 duration-200 cursor-pointer`}
           >
-            {place.status ? "Active" : "Deactive"}
+            {place.status ? "Active" : "Inactive"}
           </span>
         </div>
       </div>

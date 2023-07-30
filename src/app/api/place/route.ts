@@ -12,7 +12,7 @@ interface IBodyData {
   coverImage: string;
 }
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest, _res: NextResponse) {
   const formData = await req.formData();
   const body: any = Object.fromEntries(formData);
 
@@ -56,6 +56,7 @@ interface IPlaceFilter {
   };
   thana_id?: number;
   authorId?: number;
+  status?: boolean;
 }
 
 export async function GET(req: NextRequest) {
@@ -64,12 +65,17 @@ export async function GET(req: NextRequest) {
   const district_id = url.searchParams.get("district_id");
   const thana_id = url.searchParams.get("thana_id");
   const author_id = url.searchParams.get("author_id");
+  const status = url.searchParams.get("status");
+  const limit = url.searchParams.get("limit") || "50";
+  const skip = url.searchParams.get("skip") || "0";
 
   const filter: IPlaceFilter = { thana: { district: {} } };
   if (division_id) filter.thana.district.division_id = parseInt(division_id);
   if (district_id) filter.thana.district_id = parseInt(district_id);
   if (thana_id) filter.thana_id = parseInt(thana_id);
   if (author_id) filter.authorId = parseInt(author_id);
+  if (status === "active") filter.status = true;
+  if (status === "inactive") filter.status = false;
 
   try {
     const places = await prisma.place.findMany({
@@ -84,7 +90,10 @@ export async function GET(req: NextRequest) {
         createdAt: "desc",
       },
       where: filter,
+      take: parseInt(limit),
+      skip: parseInt(skip),
     });
+
     return NextResponse.json({ success: true, data: places });
   } catch (err: any) {
     return NextResponse.json(

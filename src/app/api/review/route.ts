@@ -58,9 +58,18 @@ interface IWhere {
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const placeId = url.searchParams.get("placeId");
+  const status = url.searchParams.get("active");
+  const skip = url.searchParams.get("skip") || "0";
+  const limit = url.searchParams.get("limit") || "20";
   const where: IWhere = {};
   if (placeId) {
     where.placeId = parseInt(placeId);
+  }
+  if (status === "active") {
+    where.status = true;
+  }
+  if (status === "inactive") {
+    where.status = false;
   }
 
   const thana = await prisma.review.findMany({
@@ -92,6 +101,8 @@ export async function GET(req: Request) {
     orderBy: {
       rating: "desc",
     },
+    take: parseInt(limit),
+    skip: parseInt(skip),
   });
 
   return NextResponse.json({ success: true, data: thana });
