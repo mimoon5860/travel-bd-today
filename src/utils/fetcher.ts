@@ -17,7 +17,6 @@ export const fetcherGet = async (url: string) => {
 export const fetcherPost = async (url: string, body: any) => {
   try {
     const data = await axios.post(url, body);
-    console.log({ data });
 
     return data.data;
   } catch (err: any) {

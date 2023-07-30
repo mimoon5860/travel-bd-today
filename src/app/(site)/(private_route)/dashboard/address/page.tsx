@@ -56,6 +56,7 @@ const Page = () => {
       district_id: addressSelect.district,
       name: addressInput.thana,
     });
+
     if (data.success) {
       alert("Thana added!");
       const thana = [
