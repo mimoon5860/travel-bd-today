@@ -3,13 +3,13 @@ import { NextResponse } from "next/server";
 
 interface RequestBody {
   name: string;
-  districtId: number;
+  district_id: number;
 }
 
 export async function POST(req: Request) {
   const body: RequestBody = await req.json();
   const res = await prisma.thana.create({
-    data: { name: body.name, district_id: body.districtId },
+    data: { name: body.name, district_id: body.district_id },
   });
 
   return NextResponse.json({ success: true, data: res });

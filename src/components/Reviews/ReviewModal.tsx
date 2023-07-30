@@ -95,8 +95,8 @@ const ReviewModal = ({ modalState, hide, placeId, userId }: IProps) => {
   };
 
   return (
-    <Rodal width={400} height={550} visible={modalState} onClose={hide}>
-      <div>
+    <Rodal width={410} height={550} visible={modalState} onClose={hide}>
+      <div className="dark:bg-dark">
         <h3 className="font-bold text-xl">Add Review</h3>
 
         <hr />

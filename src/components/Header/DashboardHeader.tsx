@@ -1,5 +1,7 @@
+"use client";
 import { useEffect, useState } from "react";
 import ThemeToggler from "./ThemeToggler";
+import { useSession } from "next-auth/react";
 
 interface Props {
   setOpen: (open: boolean) => void;
@@ -8,6 +10,7 @@ interface Props {
 
 const DashboardHeader = ({ setOpen, open }: Props) => {
   const [sticky, setSticky] = useState(false);
+  const { data } = useSession();
 
   const handleStickyNavbar = () => {
     if (window.scrollY >= 60) {
@@ -58,7 +61,9 @@ const DashboardHeader = ({ setOpen, open }: Props) => {
               </svg>
             </button>
             <div>
-              <p className="text-xl font-bold ms-6">{greet} Moon</p>
+              <p className="text-xl font-bold ms-6">
+                {greet} {data.user?.name}
+              </p>
               <span className="text-xl font-bold ms-6">
                 Welcome to your dashboard
               </span>

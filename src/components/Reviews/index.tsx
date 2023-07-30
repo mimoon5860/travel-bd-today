@@ -7,9 +7,18 @@ import { Rating } from "react-simple-star-rating";
 import { getReviews } from "@/utils/actions/reveiw";
 import dayjs from "dayjs";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { IReview } from "@/types/review";
 
-const Reviews = async () => {
-  const reviews = await getReviews({ status: "active" });
+const Reviews = () => {
+  const [reviews, setReviews] = useState<IReview[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const reviews = await getReviews({ status: "active" });
+      setReviews(reviews);
+    })();
+  }, []);
 
   return (
     <section id="places" className="overflow-hidden py-16 md:py-20 lg:py-28">

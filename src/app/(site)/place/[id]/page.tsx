@@ -1,11 +1,28 @@
+"use client";
 import { IPlaceDetails } from "@/types/place";
 import { getSinglePlace } from "@/utils/actions/place";
 import Image from "next/image";
 import dayjs from "dayjs";
 import PlaceReview from "@/components/Reviews/PlaceReview";
+import { useEffect, useState } from "react";
+import AwesomeLoadingPage from "@/components/Loading/Loading";
 
-const Page = async ({ params }: { params: { id: string } }) => {
-  const place: IPlaceDetails = await getSinglePlace(params.id);
+const Page = ({ params }: { params: { id: string } }) => {
+  const [place, setPlace] = useState<IPlaceDetails>();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const place: IPlaceDetails = await getSinglePlace(params.id);
+      setPlace(place);
+      setLoading(false);
+    })();
+  }, [params.id]);
+
+  if (loading) {
+    return <AwesomeLoadingPage />;
+  }
 
   if (!place) {
     return (

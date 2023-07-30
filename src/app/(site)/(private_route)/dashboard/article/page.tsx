@@ -5,23 +5,32 @@ import { IPlaceLIst } from "@/types/place";
 import { getPlaces } from "@/utils/actions/place";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import AwesomeLoadingPage from "@/components/Loading/Loading";
 interface IFilter {
   [key: string]: string | undefined;
 }
 const Page = () => {
   const [places, setPlaces] = useState<IPlaceLIst[]>([]);
   const { data } = useSession();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const filter: IFilter = {};
-    (async () => {
-      if (data.user.role === "User") {
-        filter.author_id = data.user.id;
-      }
-      const division = await getPlaces(filter);
-      setPlaces(division);
-    })();
-  }, [data.user]);
+    if (!places.length) {
+      (async () => {
+        if (data.user.role === "User") {
+          filter.author_id = data.user.id;
+        }
+        const division = await getPlaces(filter);
+        setPlaces(division);
+      })();
+    }
+    setLoading(false);
+  }, [data.user, places.length]);
+
+  if (loading) {
+    return <AwesomeLoadingPage />;
+  }
 
   return (
     <div className="container">
