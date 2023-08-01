@@ -31,6 +31,9 @@ export const getPlaces: (params?: IParams) => Promise<IPlaceLIst[]> = async (
   if (params?.skip) {
     url += `skip=${params.skip}&`;
   }
+  if (params?.title) {
+    url += `title=${params.title}`;
+  }
 
   const data: IResponse<IPlaceLIst[]> = await fetcherGet(url);
   if (data.success) {

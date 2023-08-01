@@ -57,6 +57,7 @@ interface IPlaceFilter {
   thana_id?: number;
   authorId?: number;
   status?: boolean;
+  title?: { search?: string };
 }
 
 export async function GET(req: NextRequest) {
@@ -68,14 +69,19 @@ export async function GET(req: NextRequest) {
   const status = url.searchParams.get("status");
   const limit = url.searchParams.get("limit") || "50";
   const skip = url.searchParams.get("skip") || "0";
+  const search = url.searchParams.get("title");
 
-  const filter: IPlaceFilter = { thana: { district: {} } };
+  const filter: IPlaceFilter = {
+    thana: { district: {} },
+    title: {},
+  };
   if (division_id) filter.thana.district.division_id = parseInt(division_id);
   if (district_id) filter.thana.district_id = parseInt(district_id);
   if (thana_id) filter.thana_id = parseInt(thana_id);
   if (author_id) filter.authorId = parseInt(author_id);
   if (status === "active") filter.status = true;
   if (status === "inactive") filter.status = false;
+  if (search) filter.title.search = search;
 
   try {
     const places = await prisma.place.findMany({
@@ -90,6 +96,7 @@ export async function GET(req: NextRequest) {
         createdAt: "desc",
       },
       where: filter,
+
       take: parseInt(limit),
       skip: parseInt(skip),
     });

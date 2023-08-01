@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -49,6 +50,7 @@ model Place{
   authorId Int 
   createdAt DateTime @default(now())
   review Review[]
+  @@fulltext([title])
 }
 
 model Review{

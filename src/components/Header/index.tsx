@@ -6,9 +6,12 @@ import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
 import { Menu } from "@/types/menu";
 import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const { status } = useSession();
+  const navigate = useRouter();
+  const [searchText, setSearchText] = useState("");
 
   // Navbar toggle
   // const session = "";
@@ -30,6 +33,11 @@ const Header = () => {
   useEffect(() => {
     window.addEventListener("scroll", handleStickyNavbar);
   });
+
+  const handleSearch = () => {
+    if (!searchText) return;
+    navigate.push(`/place?title=${searchText}`);
+  };
 
   return (
     <>
@@ -150,8 +158,24 @@ const Header = () => {
                   </ul>
                 </nav>
               </div>
-
-              <div className="flex items-center  justify-end pr-16 lg:pr-0">
+              <div className="flex items-center gap-3">
+                <div>
+                  <input
+                    onChange={(e) => setSearchText(e.target.value)}
+                    type="email"
+                    name="email"
+                    placeholder="Search places..."
+                    className="w-full rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
+                  />
+                </div>
+                <button
+                  onClick={handleSearch}
+                  className="ease-in-up hidden rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9"
+                >
+                  Search
+                </button>
+              </div>
+              <div className="flex items-center justify-end pr-16 lg:pr-0">
                 {status === "authenticated" ? (
                   <button onClick={() => signOut()} className="hidden md:block">
                     Logout
@@ -160,7 +184,7 @@ const Header = () => {
                   <>
                     <Link
                       href="/signin"
-                      className="py-3 px-7 text-base font-bold text-dark hover:opacity-70 dark:text-white md:block"
+                      className="py-3 px-7 hidden text-base font-bold text-dark hover:opacity-70 dark:text-white md:block"
                     >
                       Sign In
                     </Link>
