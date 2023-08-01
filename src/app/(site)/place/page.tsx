@@ -1,4 +1,5 @@
 "use client";
+import Breadcrumb from "@/components/Common/Breadcrumb";
 import AwesomeLoadingPage from "@/components/Loading/Loading";
 import NotFound from "@/components/NotFound/NotFound";
 import PlaceCardForPublic from "@/components/Places/PlaceCardForPublic";
@@ -14,7 +15,17 @@ const Page = ({
 }) => {
   const [places, setPlaces] = useState<IPlaceLIst[]>([]);
   const [loading, setLoading] = useState(true);
-  console.log({ searchParams });
+
+  let desc = "Visit your favorite place";
+
+  if (searchParams.title) {
+    desc = `Search result of "${searchParams.title}"`;
+  }
+
+  if (searchParams.division && searchParams.name) {
+    desc = `Places of ${searchParams.name} division`;
+  }
+
   useEffect(() => {
     (async () => {
       const places: IPlaceLIst[] = await getPlaces({
@@ -31,8 +42,9 @@ const Page = ({
   }
   return (
     <>
+      <Breadcrumb pageName="Places" description={desc} />
       {places.length ? (
-        <div className="grid md:grid-cols-4 grid-cols-2 gap-5 mb-5">
+        <div className="grid md:grid-cols-4 grid-cols-2 mt-2 gap-5 mb-5">
           {places.map((place: IPlaceLIst) => (
             <PlaceCardForPublic key={place.id} place={place} />
           ))}

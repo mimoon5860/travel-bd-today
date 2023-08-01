@@ -5,7 +5,7 @@ import Link from "next/link";
 const SingleFeature = ({ feature }: { feature: Feature }) => {
   const { icon, title, paragraph, id } = feature;
   return (
-    <Link href={`/place?division=${id}`}>
+    <Link href={`/place?division=${id}&name=${title}`}>
       <div className="w-full hover:shadow-xl shadow-cyan-500/50 p-2 rounded-md">
         <div className="wow fadeInUp" data-wow-delay=".15s">
           <div className="mb-10 flex p-2 items-center justify-center rounded-md bg-primary bg-opacity-10 text-primary">
