@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import PlaceReview from "@/components/Reviews/PlaceReview";
 import { useEffect, useState } from "react";
 import AwesomeLoadingPage from "@/components/Loading/Loading";
+import Breadcrumb from "@/components/Common/Breadcrumb";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const [place, setPlace] = useState<IPlaceDetails>();
@@ -33,48 +34,56 @@ const Page = ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <div className="container">
-      <div>
-        <h2 className="text-2xl">{place.title}</h2>
-        <div className="flex items-center justify-between my-2">
-          <div className="flex items-center gap-1">
-            <Image
-              src={
-                place.author.photo
-                  ? `/uploads/${place.author.photo}`
-                  : "/images/testimonials/demo-author.png"
-              }
-              className="rounded-full"
-              alt=""
-              width={30}
-              height={30}
-            />
-            <p className="text-sm text-gray">{place.author.name}</p>
+    <>
+      <Breadcrumb
+        pageName="Place"
+        description="Visit The Best Places Of Bangladesh"
+      />
+      <div className="max-w-7xl mx-auto px-4 my-5 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto">
+          <div>
+            <h2 className="text-2xl">{place.title}</h2>
+            <div className="flex items-center justify-between my-2">
+              <div className="flex items-center gap-1">
+                <Image
+                  src={
+                    place.author.photo
+                      ? `/uploads/${place.author.photo}`
+                      : "/images/testimonials/demo-author.png"
+                  }
+                  className="rounded-full"
+                  alt=""
+                  width={30}
+                  height={30}
+                />
+                <p className="text-sm text-gray">{place.author.name}</p>
+              </div>
+              <p className="text-sm">
+                {dayjs(place.createdAt).format("DD MMMM YYYY")}
+              </p>
+            </div>
           </div>
-          <p className="text-sm">
-            {dayjs(place.createdAt).format("DD MMMM YYYY")}
-          </p>
+          <div className="mt-2">
+            <div className="mb-8">
+              <Image
+                src={`/uploads/${place.coverImage}`}
+                alt="Article cover"
+                className="mx-auto"
+                width={700}
+                height={700}
+              />
+            </div>
+            <div
+              dangerouslySetInnerHTML={{ __html: place.description }}
+              className="mt-2"
+            ></div>
+          </div>
+        </div>
+        <div className="my-5">
+          <PlaceReview reviews={place.review} placeId={params.id} />
         </div>
       </div>
-      <div className="mt-2">
-        <div className="mb-8">
-          <Image
-            src={`/uploads/${place.coverImage}`}
-            alt="Article cover"
-            className="mx-auto"
-            width={700}
-            height={700}
-          />
-        </div>
-        <div
-          dangerouslySetInnerHTML={{ __html: place.description }}
-          className="mt-2"
-        ></div>
-      </div>
-      <div className="my-5">
-        <PlaceReview reviews={place.review} placeId={params.id} />
-      </div>
-    </div>
+    </>
   );
   ``;
 };
