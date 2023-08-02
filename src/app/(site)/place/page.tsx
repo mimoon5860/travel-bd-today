@@ -5,28 +5,38 @@ import NotFound from "@/components/NotFound/NotFound";
 import PlaceCardForPublic from "@/components/Places/PlaceCardForPublic";
 import { IPlaceLIst } from "@/types/place";
 import { getPlaces } from "@/utils/actions/place";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const Page = ({
-  searchParams,
-}: {
-  params: { id: string };
-  searchParams?: { [key: string]: string | undefined };
-}) => {
+const Page = () => {
   const [places, setPlaces] = useState<IPlaceLIst[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const searchParams = useSearchParams();
+  const title = searchParams.get("title");
+  const name = searchParams.get("name");
+  const division = searchParams.get("division");
+
   let desc = "Visit your favorite place";
 
-  if (searchParams.title) {
-    desc = `Search result of "${searchParams.title}"`;
+  if (title) {
+    desc = `Search result of "${title}"`;
   }
 
-  if (searchParams.division && searchParams.name) {
-    desc = `Places of ${searchParams.name} division`;
+  if (division && name) {
+    desc = `Places of ${name} division`;
   }
 
   useEffect(() => {
+    const searchParams: any = {};
+
+    if (title) {
+      searchParams.title = title;
+    }
+
+    if (division) {
+      searchParams.division = division;
+    }
     (async () => {
       const places: IPlaceLIst[] = await getPlaces({
         ...searchParams,
@@ -35,7 +45,7 @@ const Page = ({
       setPlaces(places);
     })();
     setLoading(false);
-  }, [searchParams]);
+  }, [division, title]);
 
   if (loading) {
     return <AwesomeLoadingPage />;
