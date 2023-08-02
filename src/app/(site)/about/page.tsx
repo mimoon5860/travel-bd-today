@@ -6,8 +6,8 @@ const AboutPage = () => {
     <>
       <Header />
       <Breadcrumb
-        pageName="Students Of European University Of Bangladesh"
-        description="This project is done by students of european university of bangladesh!"
+        pageName="Students of European University of Bangladesh"
+        description="This project is done by students of European University of Bangladesh!"
       />
     </>
   );

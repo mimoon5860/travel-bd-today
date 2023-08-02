@@ -11,9 +11,9 @@ const featuresData: Feature[] = [
   {
     id: 1,
     icon: "/images/division/chattogram-min.jpg",
-    title: "CHITTAGONG",
+    title: "CHATTOGRAM",
     paragraph:
-      "Chittagong Division (Bengali: চট্টগ্রাম) is geographically the largest of the seven administrative divisions of Bangladesh. It covers the most south-eastern areas of the country, with a total area of 33,771.18 km² and a population at the 2011 Census (preliminary result) of 28,079,000.",
+      "Chattogram Division (Bengali: চট্টগ্রাম) is geographically the largest of the seven administrative divisions of Bangladesh. It covers the most south-eastern areas of the country, with a total area of 33,771.18 km² and a population at the 2011 Census (preliminary result) of 28,079,000.",
   },
   {
     id: 2,
