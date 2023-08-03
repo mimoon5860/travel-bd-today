@@ -15,7 +15,7 @@ const Page = () => {
               : "/images/testimonials/demo-author.png"
           }
           alt="Profile Photo"
-          className="rounded-full"
+          className="rounded-full w-full h-full object-cover"
           width={150}
           height={150}
         />

@@ -94,7 +94,7 @@ const AboutPage = () => {
                     alt="Team Member 1"
                     className="rounded-full w-52 h-52 mb-2 mx-auto"
                   />
-                  <p className="text-gray font-bold">Mahmdudul islam Moon</p>
+                  <p className="text-gray font-bold">Mahmudul Islam Moon</p>
                 </div>
                 <div>
                   <Image
@@ -104,7 +104,7 @@ const AboutPage = () => {
                     alt="Team Member 1"
                     className="rounded-full w-52 h-52 mb-2  mx-auto"
                   />
-                  <p className="text-gray font-bold">Biplob Hossain</p>
+                  <p className="text-gray font-bold">Biplab Hossain</p>
                 </div>
                 <div>
                   <Image
