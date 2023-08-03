@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Places from "@/components/Places";
 import Reviews from "@/components/Reviews";
+import TravelTipsSection from "@/components/TravelTips";
 
 export default function Home() {
   return (
@@ -15,8 +16,8 @@ export default function Home() {
       <Hero />
       <Features />
       <Places />
+      <TravelTipsSection />
       <Reviews />
-      <Contact />
       <Footer />
     </>
   );

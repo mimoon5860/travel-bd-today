@@ -21,7 +21,7 @@ const Reviews = () => {
   }, []);
 
   return (
-    <section id="places" className="overflow-hidden py-16 md:py-20 lg:py-28">
+    <section id="reviews" className="overflow-hidden py-16 md:py-20 lg:py-28">
       <div className="container">
         <SectionTitle
           title="Top Reviews"

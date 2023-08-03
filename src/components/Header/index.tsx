@@ -45,7 +45,7 @@ const Header = () => {
         className={`header top-0 left-0 z-40 flex w-full items-center bg-transparent ${
           sticky
             ? "!fixed !z-[9999] !bg-white !bg-opacity-80 shadow-sticky backdrop-blur-sm !transition dark:!bg-primary dark:!bg-opacity-20"
-            : "absolute"
+            : "absolute !bg-white !bg-opacity-60 shadow-sticky backdrop-blur-sm !transition dark:!bg-primary dark:!bg-opacity-20"
         }`}
       >
         <div className="container">
@@ -54,7 +54,7 @@ const Header = () => {
               <Link
                 href="/"
                 className={`header-logo block w-full ${
-                  sticky ? "py-5 lg:py-2" : "py-8"
+                  sticky ? "py-3 lg:py-2" : "py-5"
                 } `}
               >
                 <Image
@@ -106,16 +106,6 @@ const Header = () => {
                   }`}
                 >
                   <ul className="block lg:flex lg:space-x-12">
-                    {menuData.map((menuItem: Menu, index) => (
-                      <li key={menuItem.id} className="group relative">
-                        <Link
-                          href={menuItem.path}
-                          className={`flex py-2 text-base text-dark group-hover:opacity-70 dark:text-white lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
-                        >
-                          {menuItem.title}
-                        </Link>
-                      </li>
-                    ))}
                     {status === "authenticated" ? (
                       <>
                         <li className="group relative">
@@ -155,6 +145,16 @@ const Header = () => {
                         </li>
                       </>
                     )}
+                    {menuData.map((menuItem: Menu, index) => (
+                      <li key={menuItem.id} className="group relative">
+                        <Link
+                          href={menuItem.path}
+                          className={`flex py-2 text-base text-dark group-hover:opacity-70 dark:text-white lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
+                        >
+                          {menuItem.title}
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </nav>
               </div>
